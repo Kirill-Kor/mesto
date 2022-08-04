@@ -1,0 +1,22 @@
+.profile__info {
+  grid-area: info;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: min-content min-content;
+  grid-template-areas:
+  "name edit"
+  "description description";
+  align-content: center;
+  align-items: baseline;
+  column-gap: 18px;
+  row-gap: 8px;
+}
+
+@media screen and (max-width: 522px) {
+  .profile__info {
+    margin-top: 26px;
+    text-align: center;
+    column-gap: 10px;
+    max-width: 383px;
+  }
+}
