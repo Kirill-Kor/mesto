@@ -23,7 +23,6 @@
 
   font-family: 'Inter', Arial, sans-serif;
 }
-/* *{border: 1px solid red;} */
 
 .container {
   box-sizing: border-box;
@@ -487,7 +486,7 @@
 .edit-form__field {
   padding: 0;
   margin: 0;
-  margin-top: 30px;
+  margin-top: 26px;
   padding-bottom: 13px;
 
   border: 0;
@@ -496,10 +495,16 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
+
 }
 
 .edit-form__field:first-of-type {
-  margin-top: 54px;
+  margin-top: 49px;
+}
+
+.edit-form__field:focus {
+  outline: 0;
+  border-bottom: 1px solid #000;
 }
 
 @media screen and (max-width: 520px) {
@@ -509,7 +514,7 @@
 }
 
 .edit-form__save-button {
-  margin-top: 48px;
+  margin-top: 43px;
   margin-bottom: 37px;
   padding: 11px 0 15px 0;
   background-color: #000;
@@ -529,7 +534,7 @@
 
 @media screen and (max-width: 520px) {
   .edit-form__save-button {
-    margin-top: 45px;
+    margin-top: 41px;
     margin-bottom: 25px;
     padding: 14px;
     font-size: 14px;

@@ -24,24 +24,15 @@ for(let i=0; i<likeButtons.length; i++) {
   });
 }
 
-
 editButton.addEventListener('click', openPopup);
 closeButton.addEventListener('click', closePopup);
 
 form.addEventListener('submit', formSubmitHandler);
 
-
-
-
 function openPopup() {
   popup.classList.add('popup_opened');
-
    nameField.value = profileName.textContent;
    descriptionField.value = profileDescription.textContent;
-
-  // nameField.setAttribute('value', profileName.textContent);
-  // descriptionField.setAttribute('value', profileDescription.textContent);
-
 }
 
 function closePopup() {
