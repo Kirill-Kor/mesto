@@ -2,10 +2,11 @@
   grid-area: info;
   box-sizing: border-box;
   display: grid;
-  grid-template-columns: min-content min-content;
+  grid-template-columns: 300px min-content;
+
   grid-template-areas:
   "name edit"
-  "description description";
+  "description field";
   align-content: center;
   align-items: baseline;
   column-gap: 18px;
@@ -14,6 +15,7 @@
 
 @media screen and (max-width: 522px) {
   .profile__info {
+    grid-template-columns: 227px min-content;
     margin-top: 26px;
     text-align: center;
     column-gap: 10px;

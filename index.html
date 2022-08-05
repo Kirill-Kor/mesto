@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./pages/index.css">
-    <title>Mesto</title>
+    <title lang="en">Mesto</title>
 </head>
 <body class="root">
     <div class="container">
@@ -19,74 +19,77 @@
             <div class="profile__info">
               <h1 class="profile__name">Жак-Ив Кусто</h1>
               <p class="profile__description">Исследователь океана</p>
-              <button class="profile__edit-button"></button>
+              <button class="profile__edit-button" type="button"></button>
             </div>
             <button class="profile__add-button" type="button"></button>
           </section>
 
           <section class="places">
             <ul class="table">
-              <li class="place">
-                <img class="place__image" src="./images/places/karachaevsk.jpg" alt="Сентинский храм">
-                <div class="place__content">
-                  <h2 class="place__title">Карачаевск</h2>
-                  <button class="place__like-button" type="button"></button>
+              <li class="places__place">
+                <img class="places__image" src="./images/places/karachaevsk.jpg" alt="Сентинский храм">
+                <div class="places__content">
+                  <h2 class="places__title">Карачаевск</h2>
+                  <button class="places__like-button" type="button"></button>
                 </div>
               </li>
-              <li class="place">
-                <img class="place__image" src="./images/places/elbrus.jpg" alt="Кусты на переднем плане, вдалеке горы">
-                <div class="place__content">
-                  <h2 class="place__title">Гора Эльбрус</h2>
-                  <button class="place__like-button" type="button"></button>
+              <li class="places__place">
+                <img class="places__image" src="./images/places/elbrus.jpg" alt="Кусты на переднем плане, вдалеке горы">
+                <div class="places__content">
+                  <h2 class="places__title">Гора Эльбрус</h2>
+                  <button class="places__like-button" type="button"></button>
                 </div>
               </li>
-              <li class="place">
-                <img class="place__image" src="./images/places/dombai.jpg" alt="Заснеженная гора Домбай">
-                <div class="place__content">
-                  <h2 class="place__title">Домбай</h2>
-                  <button class="place__like-button" type="button"></button>
+              <li class="places__place">
+                <img class="places__image" src="./images/places/dombai.jpg" alt="Заснеженная гора Домбай">
+                <div class="places__content">
+                  <h2 class="places__title">Домбай</h2>
+                  <button class="places__like-button" type="button"></button>
                 </div>
               </li>
-              <li class="place">
-                <img class="place__image" src="./images/places/elbrus.jpg" alt="Кусты на переднем плане, вдалеке горы">
-                <div class="place__content">
-                  <h2 class="place__title">Гора Эльбрус</h2>
-                  <button class="place__like-button" type="button"></button>
+              <li class="places__place">
+                <img class="places__image" src="./images/places/elbrus.jpg" alt="Кусты на переднем плане, вдалеке горы">
+                <div class="places__content">
+                  <h2 class="places__title">Гора Эльбрус</h2>
+                  <button class="places__like-button" type="button"></button>
                 </div>
               </li>
-              <li class="place">
-                <img class="place__image" src="./images/places/dombai.jpg" alt="Заснеженная гора Домбай">
-                <div class="place__content">
-                  <h2 class="place__title">Домбай</h2>
-                  <button class="place__like-button" type="button"></button>
+              <li class="places__place">
+                <img class="places__image" src="./images/places/dombai.jpg" alt="Заснеженная гора Домбай">
+                <div class="places__content">
+                  <h2 class="places__title">Домбай</h2>
+                  <button class="places__like-button" type="button"></button>
                 </div>
               </li>
-              <li class="place">
-                <img class="place__image" src="./images/places/karachaevsk.jpg" alt="Сентинский храм">
-                <div class="place__content">
-                  <h2 class="place__title">Карачаево-Черкесия</h2>
-                  <button class="place__like-button" type="button"></button>
+              <li class="places__place">
+                <img class="places__image" src="./images/places/karachaevsk.jpg" alt="Сентинский храм">
+                <div class="places__content">
+                  <h2 class="places__title">Карачаево-Черкесия</h2>
+                  <button class="places__like-button" type="button"></button>
                 </div>
               </li>
             </ul>
           </section>
 
-          <section class="popup">
-            <div class="overlay"></div>
-            <form class="edit-form">
-              <h2 class="edit-form__title">Редактировать профиль</h2>
-              <input class="edit-form__field edit-form__field_type_name" type="text" value="">
-              <input class="edit-form__field edit-form__field_type_description" type="text" value="">
-              <button class="edit-form__save-button" type="submit">Сохранить</button>
-              <button class="edit-form__close-button" type="button"></button>
-            </form>
-          </section>
       </main>
+
       <footer class="footer">
-        <p class="footer__title">© 2020 Mesto Russia</p>
+        <p class="footer__title" lang="en">© 2020 Mesto Russia</p>
       </footer>
 
+      <div class="popup">
+        <div class="popup__form">
+          <h2 class="popup__title">Редактировать профиль</h2>
+          <form class="edit-form" name="edit-form">
+            <input class="edit-form__field edit-form__field_type_name" type="text" value="" placeholder="Ваше имя">
+            <input class="edit-form__field edit-form__field_type_description" type="text" value="" placeholder="Описание">
+            <button class="edit-form__save-button" type="submit">Сохранить</button>
+          </form>
+          <button class="popup__close-button" type="button"></button>
+      </div>
+      </div>
+
     </div>
-    <script src="./scripts/script.js"></script>
+    <script src="./scripts/index.js"></script>
 </body>
 </html>

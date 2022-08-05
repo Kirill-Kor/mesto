@@ -1,6 +1,6 @@
 @import url(../vendor/normalize.css);
 
-@import url(../vendor/fonts/inter.css);
+@import url(../vendor/fonts/fonts.css);
 
 @import url(../blocks/root/root.css);
 
@@ -22,21 +22,26 @@
 @import url(../blocks/places/places.css);
 @import url(../blocks/table/table.css);
 
-@import url(../blocks/place/place.css);
-@import url(../blocks/place/__image/place__image.css);
-@import url(../blocks/place/__content/place__content.css);
-@import url(../blocks/place/__title/place__title.css);
-@import url(../blocks/place/__like-button/place__like-button.css);
+@import url(../blocks/places/__content/places__content.css);
+@import url(../blocks/places/__image/places__image.css);
+@import url(../blocks/places/__like-button/places__like-button.css);
+@import url(../blocks/places/__place/places__place.css);
+@import url(../blocks/places/__title/places__title.css);
 
-@import url(../blocks/popup/popup.css);
-@import url(../blocks/popup/popup_opened.css);
-@import url(../blocks/overlay/overlay.css);
 
-@import url(../blocks/edit-form/edit-form.css);
-@import url(../blocks/edit-form/__title/edit-form__title.css);
-@import url(../blocks/edit-form/__field/edit-form__field.css);
-@import url(../blocks/edit-form/__save-button/edit-form__save-button.css);
-@import url(../blocks/edit-form/__close-button/edit-form__close-button.css);
+
+
+
 
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__title/footer__title.css);
+
+@import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/popup_opened.css);
+@import url(../blocks/popup/__title/popup__title.css);
+@import url(../blocks/popup/__form/popup__form.css);
+@import url(../blocks/popup/__close-button/popup__close-button.css);
+
+@import url(../blocks/edit-form/edit-form.css);
+@import url(../blocks/edit-form/__field/edit-form__field.css);
+@import url(../blocks/edit-form/__save-button/edit-form__save-button.css);

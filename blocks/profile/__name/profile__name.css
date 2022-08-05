@@ -1,6 +1,6 @@
 .profile__name {
-  max-width: 517px;
-  min-width: 189px;
+  /* max-width: 517px;
+  min-width: 189px; */
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -13,11 +13,11 @@
   line-height: 48px;
 }
 
-@media screen and (max-width: 950px) {
+/* @media screen and (max-width: 950px) {
   .profile__name {
     max-width: calc(150px + (328 + 328*0.7) *((100vw - 320px)/950));
   }
-}
+} */
 
 @media screen and (max-width: 400px) {
   .profile__name {

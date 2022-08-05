@@ -1,7 +1,7 @@
 .profile__description {
   grid-area: description;
-  max-width: 517px;
-  min-width: 189px;
+  /* max-width: 517px;
+  min-width: 189px; */
   padding: 0;
   margin: 0;
   text-overflow: ellipsis;
@@ -13,16 +13,15 @@
   line-height: 22px;
 }
 
-@media screen and (max-width: 950px) {
+/* @media screen and (max-width: 950px) {
   .profile__description {
     max-width: calc(150px + (328 + 328*0.7) *((100vw - 320px)/950));
   }
-}
+} */
 
 @media screen and (max-width: 400px) {
   .profile__description {
     font-size: 14px;
     line-height: 17px;
-    margin-left: 27px;
   }
 }

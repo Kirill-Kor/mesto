@@ -25,6 +25,6 @@
     "info"
     "add";
     justify-items: center;
-    row-gap: 0px;
+    row-gap: 0;
   }
 }
