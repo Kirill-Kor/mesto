@@ -14,25 +14,15 @@ let descriptionField = container.querySelector('.edit-form__field_type_descripti
 
 let likeButtons = container.querySelectorAll('.places__like-button');
 
-for(let i=0; i<likeButtons.length; i++) {
-  likeButtons[i].addEventListener('click', function() {
-    likeButtons[i].classList.toggle('places__like-button_active');
-  });
-}
-
 function openPopup() {
   popup.classList.add('popup_opened');
    nameField.value = profileName.textContent;
    descriptionField.value = profileDescription.textContent;
 }
 
-editButton.addEventListener('click', openPopup);
-
 function closePopup() {
   popup.classList.remove('popup_opened');
 }
-
-closeButton.addEventListener('click', closePopup);
 
 function formSubmitHandler (evt) {
   evt.preventDefault();
@@ -41,8 +31,6 @@ function formSubmitHandler (evt) {
   closePopup();
 }
 
+editButton.addEventListener('click', openPopup);
+closeButton.addEventListener('click', closePopup);
 form.addEventListener('submit', formSubmitHandler);
-
-
-
-

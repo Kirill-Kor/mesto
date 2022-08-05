@@ -1,10 +1,1 @@
-.table {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
-  justify-items: center;
-  row-gap: 20px;
-  column-gap: 17px;
-}
+
