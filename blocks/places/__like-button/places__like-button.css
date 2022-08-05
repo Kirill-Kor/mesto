@@ -10,10 +10,10 @@
   cursor: pointer;
 }
 
-.place__like-button:hover {
+.places__like-button:hover {
   opacity: 0.5;
 }
 
-.place__like-button_active {
+.places__like-button_active {
   background-image: url(../../../images/like-button_active.svg);
 }
