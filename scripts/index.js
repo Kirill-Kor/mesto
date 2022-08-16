@@ -2,7 +2,6 @@ const container = document.querySelector('.container');
 const editButton = container.querySelector('.profile__edit-button');
 const addButton = container.querySelector('.profile__add-button');
 
-
 const saveButton = container.querySelector('.edit-form__save-button');
 
 const popup = container.querySelector('.popup');
@@ -23,11 +22,8 @@ const addForm = container.querySelector('.edit-form_type_add');
 const placeTemplate = container.querySelector('.place-template').content;
 const placesTable = container.querySelector('.places__table');
 
-
 const placeNameField = container.querySelector('.edit-form__field_type_place-name');
 const placeLinkField = container.querySelector('.edit-form__field_type_place-link');
-
-
 
 const initialCards = [
   {
@@ -39,16 +35,16 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
   },
   {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    name: 'Якутия',
+    link: 'https://thumb.tildacdn.com/tild3830-3463-4639-b834-383663626162/-/resize/960x/-/format/webp/shutterstock_1971476.jpg'
   },
   {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    name: 'Курильские острова',
+    link: 'https://thumb.tildacdn.com/tild3238-3334-4631-a566-333233616431/-/resize/960x/-/format/webp/shutterstock_2075242.jpg'
   },
   {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    name: 'Пермский край',
+    link: 'https://thumb.tildacdn.com/tild3232-3038-4530-b531-623461306364/-/resize/960x/-/format/webp/shutterstock_7075422.jpg'
   },
   {
     name: 'Байкал',
@@ -57,6 +53,17 @@ const initialCards = [
 ];
 
 loadPosts();
+
+function formSubmitHandler (evt) {
+  evt.preventDefault();
+  if (evt.target.classList.value.includes('info-edit')) {
+    saveInfo();
+  }
+  else if (evt.target.classList.value.includes('add')) {
+    addPost();
+  }
+  closePopup(evt.target.parentElement.parentElement);
+}
 
 function addPost() {
   const newPlace = {};
@@ -68,27 +75,7 @@ function addPost() {
   place.querySelector('.places__image').src = initialCards[0].link;
   place.querySelector('.places__title').textContent = initialCards[0].name;
   placesTable.insertBefore(place, placesTable.firstChild);
-
-  const likeButton = place.querySelector('.places__like-button');
-    likeButton.addEventListener('click', function(evt) {
-      evt.target.classList.toggle('places__like-button_active');
-    })
-
-  const deleteButton = place.querySelector('.places__delete-button');
-    deleteButton.addEventListener('click', function(evt) {
-      evt.target.parentElement.parentElement.remove();
-    })
-
-  const openImage = place.querySelector('.places__image');
-    openImage.addEventListener('click', function(evt) {
-      openPopup(imagePopup);
-      const popupImage = container.querySelector('.popup__image');
-      popupImage.src = evt.target.src;
-
-      const imageCaption = container.querySelector('.popup__caption');
-      imageCaption.textContent = initialCards[0].name;
-    })
-
+  setButtonsListeners(place, initialCards[0].name);
 }
 
 function loadPosts() {
@@ -97,32 +84,31 @@ function loadPosts() {
     place.querySelector('.places__image').src = item.link;
     place.querySelector('.places__title').textContent = item.name;
     placesTable.append(place);
+    setButtonsListeners(place, item.name);
+  });
+}
 
-    const likeButton = place.querySelector('.places__like-button');
+function setButtonsListeners(target, caption) {
+  const likeButton = target.querySelector('.places__like-button');
     likeButton.addEventListener('click', function(evt) {
       evt.target.classList.toggle('places__like-button_active');
     })
 
-    const deleteButton = place.querySelector('.places__delete-button');
+    const deleteButton = target.querySelector('.places__delete-button');
     deleteButton.addEventListener('click', function(evt) {
       evt.target.parentElement.parentElement.remove();
     })
 
-    const openImage = place.querySelector('.places__image');
-    openImage.addEventListener('click', function(evt) {
+    const openedImage = target.querySelector('.places__image');
+    openedImage.addEventListener('click', function(evt) {
       openPopup(imagePopup);
       const popupImage = container.querySelector('.popup__image');
       popupImage.src = evt.target.src;
 
       const imageCaption = container.querySelector('.popup__caption');
-      imageCaption.textContent = item.name;
+      imageCaption.textContent = caption;
     })
-  });
-
-
 }
-
-
 
 function openPopup(currentPopup) {
   currentPopup.classList.add('popup_opened');
@@ -130,40 +116,32 @@ function openPopup(currentPopup) {
   ('click', () => closePopup(currentPopup));
 
   if (currentPopup.classList.value.includes('info-edit')) {
-    fielsFill();
+    fillFields();
+  }
+  else if (currentPopup.classList.value.includes('add-post')) {
+    placeNameField.value = "";
+    placeLinkField.value = "";
+
   }
 }
-
-function fielsFill() {
-  nameField.value = profileName.textContent;
-  descriptionField.value = profileDescription.textContent;
-
-}
-
-function infoSave() {
-  profileName.textContent = nameField.value;
-  profileDescription.textContent = descriptionField.value;
-}
-
 
 function closePopup(currentPopup) {
   currentPopup.classList.remove('popup_opened');
 }
 
-function formSubmitHandler (evt) {
-  evt.preventDefault();
-  if (evt.target.classList.value.includes('info-edit')) {
-    infoSave();
-  }
-  else if (evt.target.classList.value.includes('add')) {
-    addPost();
-  }
+function fillFields() {
+  nameField.value = profileName.textContent;
+  descriptionField.value = profileDescription.textContent;
 
-  closePopup(evt.target.parentElement.parentElement);
 }
+
+function saveInfo() {
+  profileName.textContent = nameField.value;
+  profileDescription.textContent = descriptionField.value;
+}
+
 
 editButton.addEventListener('click', () => openPopup(editPopup));
 addButton.addEventListener('click', () => openPopup(addPopup));
-//closeButton.addEventListener('click', closePopup);
 editForm.addEventListener('submit', formSubmitHandler);
 addForm.addEventListener('submit', formSubmitHandler);
