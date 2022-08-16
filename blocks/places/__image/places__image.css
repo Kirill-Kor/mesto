@@ -4,4 +4,9 @@
   height: 282px;
   object-fit: cover;
   border-radius: 10px 10px 0 0;
+  transition: all .5s;
+}
+
+.places__image:hover {
+  filter: brightness(65%);
 }

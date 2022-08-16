@@ -35,10 +35,13 @@
                     <button class="places__delete-button" type="button" aria-label="Удалить"></button>
                   </div>
                 </li>
-            </template>
+              </template>
+
 
             </ul>
           </section>
+
+
 
       </main>
 
@@ -61,7 +64,7 @@
       <div class="popup popup_type_add-post">
         <div class="popup__container">
           <h2 class="popup__title">Новое место</h2>
-          <form class="edit-form edit-form_type_add" name="edit-form">
+          <form class="edit-form edit-form_type_add" name="create-form">
             <input class="edit-form__field edit-form__field_type_place-name" type="text" value="" placeholder="Название">
             <input class="edit-form__field edit-form__field_type_place-link" type="text" value="" placeholder="Ссылка на картинку">
             <button class="edit-form__save-button" type="submit">Создать</button>
@@ -76,10 +79,10 @@
           <figcaption class="popup__caption"></figcaption>
           <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
         </div>
-
       </div>
-
     </div>
+
     <script src="./scripts/index.js" defer></script>
+    <script src="./scripts/places.json"></script>
 </body>
 </html>
