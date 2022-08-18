@@ -22,10 +22,7 @@ const placesTable = container.querySelector('.places__table');
 const placeNameField = container.querySelector('.edit-form__field_type_place-name');
 const placeLinkField = container.querySelector('.edit-form__field_type_place-link');
 
-const popupEditInfoCloseButton = container.querySelector('.popup__close-button_place_info');
-const popupCreatePlaceCloseButton = container.querySelector('.popup__close-button_place_add');
-const popupOpenImageCloseButton = container.querySelector('.popup__close-button_place_image');
-
+const popupCloseButtons = container.querySelectorAll('.popup__close-button');
 
 const initialCards = JSON.parse(places);
 
@@ -116,6 +113,6 @@ profileAddButton.addEventListener('click', () => {
 });
 formEditInfo.addEventListener('submit', formEditInfoSubmitHandler);
 formCreatePlace.addEventListener('submit', formCreatePlaceSubmitHandler);
-popupCreatePlaceCloseButton.addEventListener('click', () => closePopup(popupCreatePlace));
-popupEditInfoCloseButton.addEventListener('click', () => closePopup(popupEditInfo));
-popupOpenImageCloseButton.addEventListener('click', () => closePopup(popupOpenImage));
+popupCloseButtons.forEach(button =>
+  button.addEventListener('click', () => closePopup(button.closest('.popup'))));
+
