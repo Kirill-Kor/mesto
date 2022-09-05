@@ -66,10 +66,10 @@
       <div class="popup popup_type_add-post">
         <div class="popup__container">
           <h2 class="popup__title">Новое место</h2>
-          <form class="edit-form edit-form_type_add" name="create-form">
-            <input id="place-name-input" class="edit-form__field edit-form__field_type_place-name" type="text" value="" placeholder="Название">
+          <form class="edit-form edit-form_type_add" name="create-form" novalidate>
+            <input id="place-name-input" class="edit-form__field edit-form__field_type_place-name" type="text" value="" placeholder="Название" minlength="2" maxlength="30" required>
             <span class="edit-form__field-error place-name-input-error"></span>
-            <input id="place-link-input" class="edit-form__field edit-form__field_type_place-link" type="text" value="" placeholder="Ссылка на картинку">
+            <input id="place-link-input" class="edit-form__field edit-form__field_type_place-link" type="URL" value="" placeholder="Ссылка на картинку" required>
             <span class="edit-form__field-error place-link-input-error"></span>
             <button class="edit-form__save-button" type="submit">Создать</button>
           </form>

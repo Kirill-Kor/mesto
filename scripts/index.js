@@ -83,6 +83,69 @@ function renderPlace(place, container) {
 
 function openPopup(currentPopup) {
   currentPopup.classList.add('popup_opened');
+  enableValidation({
+    formSelector: currentPopup.querySelector('.edit-form'),
+    inputSelector: currentPopup.querySelectorAll('.edit-form__field'),
+    submitButtonSelector: currentPopup.querySelector('.edit-form__save-button'),
+    inactiveButtonClass: 'edit-form__save-button_inactive'
+
+  })
+
+}
+
+function enableValidation(config) {
+  const inputs = Array.from(config.inputSelector);
+
+  function showInputError(errorField, message) {
+    errorField.textContent = message;
+  }
+
+  function hideInputError(errorField) {
+    errorField.textContent = '';
+  }
+
+  function setButtonActive(config) {
+    config.submitButtonSelector.classList.remove(config.inactiveButtonClass);
+    config.submitButtonSelector.disabled = false;
+
+  }
+
+  function setButtonDisable() {
+    config.submitButtonSelector.classList.add(config.inactiveButtonClass);
+    config.submitButtonSelector.disabled = true;
+
+  }
+
+  function isValid(input) {
+    return input.validity.valid;
+  }
+
+  function checkValidation(input, config) {
+    const errorField = document.querySelector(`.${input.id}-error`);
+
+    if (!isValid(input)) {
+      showInputError(errorField, input.validationMessage);
+      setButtonDisable(config);
+    }
+    else {
+      hideInputError(errorField);
+      if (inputs.every(isValid)) {
+        setButtonActive(config);
+      };
+    }
+  }
+
+  function setHandlers(config) {
+    inputs.forEach((input) => {
+      checkValidation(input, config);
+      input.addEventListener('input', (evt) => {
+        checkValidation(evt.target, config);
+      })
+    })
+  }
+
+  setHandlers(config);
+
 }
 
 function closePopup(currentPopup) {
@@ -111,6 +174,8 @@ profileAddButton.addEventListener('click', () => {
   openPopup(popupCreatePlace);
 
 });
+
+
 formEditInfo.addEventListener('submit', formEditInfoSubmitHandler);
 formCreatePlace.addEventListener('submit', formCreatePlaceSubmitHandler);
 popupCloseButtons.forEach(button =>
