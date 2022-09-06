@@ -26,21 +26,34 @@ const popupCloseButtons = container.querySelectorAll('.popup__close-button');
 
 const initialCards = JSON.parse(places);
 
-loadPosts();
 
-function loadPosts() {
   initialCards.forEach((item) => {
     renderPlace(createPlace(item.name, item.link), placesTable);
   });
-}
 
-function formEditInfoSubmitHandler (evt) {
+  const forms = Array.from(container.querySelectorAll('.edit-form'));
+
+  //Включаем валидацию и сохраняем начальные состояния кнопок
+  const initialButtonStates = forms.map((form) => {
+    return enableValidation({
+      formSelector: form,
+      inputSelector: form.querySelectorAll('.edit-form__field'),
+      submitButtonSelector: form.querySelector('.edit-form__save-button'),
+      inactiveButtonClass: 'edit-form__save-button_inactive',
+      inputErrorClass: 'edit-form__field_type_error'
+    })
+  })
+
+  console.log(initialButtonStates);
+
+
+function submitProfileForm (evt) {
   evt.preventDefault();
   saveInfo();
   closePopup(popupEditInfo);
 }
 
-function formCreatePlaceSubmitHandler (evt) {
+function submitCreatePlaceForm (evt) {
   evt.preventDefault();
   renderPlace(createPlace(placeNameField.value, placeLinkField.value), placesTable);
   const createButton = popupCreatePlace.querySelector('.edit-form__save-button');
@@ -51,9 +64,11 @@ function formCreatePlaceSubmitHandler (evt) {
 
 function createPlace(placeName, placeLink) {
   const place = placeTemplate.querySelector('.places__place').cloneNode(true);
-  place.querySelector('.places__image').src = placeLink;
+  const placesImageSelector = place.querySelector('.places__image');
+  placesImageSelector.src = placeLink;
+  placesImageSelector.alt = "Фото";
   place.querySelector('.places__title').textContent = placeName;
-  place.querySelector('.places__image').alt = "Фото";
+
 
   const likeButton = place.querySelector('.places__like-button');
     likeButton.addEventListener('click', function(evt) {
@@ -85,38 +100,57 @@ function renderPlace(place, container) {
 
 function openPopup(currentPopup) {
   currentPopup.classList.add('popup_opened');
-  enableValidation({
-    formSelector: currentPopup.querySelector('.edit-form'),
-    inputSelector: currentPopup.querySelectorAll('.edit-form__field'),
-    submitButtonSelector: currentPopup.querySelector('.edit-form__save-button'),
-    inactiveButtonClass: 'edit-form__save-button_inactive',
-    inputErrorClass: 'edit-form__field_type_error'
-  })
-
   setPopupClosingListeners(currentPopup);
 
 }
 
 function setPopupClosingListeners(popup) {
-  popup.addEventListener('mousedown', function(evt) {
-    if(evt.target === evt.currentTarget) {
-      closePopup(popup);
-    }
-  })
+  popup.addEventListener('mousedown', handleOutsideClick);
   document.addEventListener('keyup', handleEscClick);
 }
 
-function handleEscClick(evt) {
-  popup = document.querySelector('.popup_opened');
-
-  if (evt.key === 'Escape') {
+function handleOutsideClick(evt) {
+  if(evt.target === evt.currentTarget) {
+    popup = document.querySelector('.popup_opened');
     closePopup(popup);
   }
-  document.removeEventListener('keyup', handleEscClick);
+
+}
+
+function handleEscClick(evt) {
+  if (evt.key === 'Escape') {
+    popup = document.querySelector('.popup_opened');
+    closePopup(popup);
+  }
+
+}
+
+function clearErrors(popup) {
+  const errors = popup.querySelectorAll('.edit-form__field-error');
+  const fields = popup.querySelectorAll('.edit-form__field');
+  const buttonSave = popup.querySelector('.edit-form__save-button');
+
+  //Проходим по массиву объектов с начальными кнопками, устанавливаем начальное значение вместо текущего
+  for(let i = 0; i<initialButtonStates.length; i++) {
+    if (initialButtonStates[i].button === buttonSave) {
+      buttonSave.disabled = initialButtonStates[i].disabled;
+
+      initialButtonStates[i].disabled ? buttonSave.classList.add('edit-form__save-button_inactive') : buttonSave.classList.remove('edit-form__save-button_inactive');
+
+      break;
+    }
+  } //Это кажется безумием, но отчаянные времена требуют отчаянных мер.
+
+  errors.forEach(error => error.textContent = "");
+  fields.forEach(field => field.classList.remove('edit-form__field_type_error'));
+
 }
 
 function closePopup(currentPopup) {
   currentPopup.classList.remove('popup_opened');
+  clearErrors(currentPopup);
+  document.removeEventListener('keyup', handleEscClick);
+  currentPopup.removeEventListener('mousedown', handleOutsideClick);
 }
 
 function fillFormEditInfoFields() {
@@ -141,8 +175,8 @@ profileAddButton.addEventListener('click', () => {
 
 });
 
-formEditInfo.addEventListener('submit', formEditInfoSubmitHandler);
-formCreatePlace.addEventListener('submit', formCreatePlaceSubmitHandler);
+formEditInfo.addEventListener('submit', submitProfileForm);
+formCreatePlace.addEventListener('submit', submitCreatePlaceForm);
 popupCloseButtons.forEach(button =>
   button.addEventListener('click', () => closePopup(button.closest('.popup'))));
 

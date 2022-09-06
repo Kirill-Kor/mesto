@@ -44,8 +44,6 @@ function enableValidation(config) {
 
   function setHandlers(config) {
     inputs.forEach((input) => {
-      checkValidation(input, config);
-      hideInputError(input, document.querySelector(`.${input.id}-error`));
 
       input.addEventListener('input', (evt) => {
         checkValidation(evt.target, config);
@@ -53,6 +51,9 @@ function enableValidation(config) {
     })
   }
 
+
   setHandlers(config);
+  return {button: config.submitButtonSelector, disabled: config.submitButtonSelector.disabled};
+
 
 }
