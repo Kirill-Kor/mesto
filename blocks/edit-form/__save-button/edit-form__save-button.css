@@ -19,7 +19,7 @@
 
 @media screen and (max-width: 520px) {
   .edit-form__save-button {
-    margin-top: 41px;
+    margin-top: 1px;
     margin-bottom: 25px;
     padding: 14px;
     font-size: 14px;

@@ -43,6 +43,9 @@ function formEditInfoSubmitHandler (evt) {
 function formCreatePlaceSubmitHandler (evt) {
   evt.preventDefault();
   renderPlace(createPlace(placeNameField.value, placeLinkField.value), placesTable);
+  const createButton = popupCreatePlace.querySelector('.edit-form__save-button');
+  createButton.disabled = true;
+  createButton.classList.add('edit-form__save-button_inactive');
   closePopup(popupCreatePlace);
 }
 
@@ -69,7 +72,6 @@ function createPlace(placeName, placeLink) {
       popupImage.src = evt.target.src;
       popupImage.alt = evt.target.alt;
 
-
       const imageCaption = container.querySelector('.popup__caption');
       imageCaption.textContent = placeName;
     })
@@ -87,65 +89,30 @@ function openPopup(currentPopup) {
     formSelector: currentPopup.querySelector('.edit-form'),
     inputSelector: currentPopup.querySelectorAll('.edit-form__field'),
     submitButtonSelector: currentPopup.querySelector('.edit-form__save-button'),
-    inactiveButtonClass: 'edit-form__save-button_inactive'
-
+    inactiveButtonClass: 'edit-form__save-button_inactive',
+    inputErrorClass: 'edit-form__field_type_error'
   })
+
+  setPopupClosingListeners(currentPopup);
 
 }
 
-function enableValidation(config) {
-  const inputs = Array.from(config.inputSelector);
-
-  function showInputError(errorField, message) {
-    errorField.textContent = message;
-  }
-
-  function hideInputError(errorField) {
-    errorField.textContent = '';
-  }
-
-  function setButtonActive(config) {
-    config.submitButtonSelector.classList.remove(config.inactiveButtonClass);
-    config.submitButtonSelector.disabled = false;
-
-  }
-
-  function setButtonDisable() {
-    config.submitButtonSelector.classList.add(config.inactiveButtonClass);
-    config.submitButtonSelector.disabled = true;
-
-  }
-
-  function isValid(input) {
-    return input.validity.valid;
-  }
-
-  function checkValidation(input, config) {
-    const errorField = document.querySelector(`.${input.id}-error`);
-
-    if (!isValid(input)) {
-      showInputError(errorField, input.validationMessage);
-      setButtonDisable(config);
+function setPopupClosingListeners(popup) {
+  popup.addEventListener('mousedown', function(evt) {
+    if(evt.target === evt.currentTarget) {
+      closePopup(popup);
     }
-    else {
-      hideInputError(errorField);
-      if (inputs.every(isValid)) {
-        setButtonActive(config);
-      };
-    }
+  })
+  document.addEventListener('keyup', handleEscClick);
+}
+
+function handleEscClick(evt) {
+  popup = document.querySelector('.popup_opened');
+
+  if (evt.key === 'Escape') {
+    closePopup(popup);
   }
-
-  function setHandlers(config) {
-    inputs.forEach((input) => {
-      checkValidation(input, config);
-      input.addEventListener('input', (evt) => {
-        checkValidation(evt.target, config);
-      })
-    })
-  }
-
-  setHandlers(config);
-
+  document.removeEventListener('keyup', handleEscClick);
 }
 
 function closePopup(currentPopup) {
@@ -162,7 +129,6 @@ function saveInfo() {
   profileDescription.textContent = descriptionField.value;
 }
 
-
 profileEditButton.addEventListener('click', () => {
   fillFormEditInfoFields();
   openPopup(popupEditInfo);
@@ -174,7 +140,6 @@ profileAddButton.addEventListener('click', () => {
   openPopup(popupCreatePlace);
 
 });
-
 
 formEditInfo.addEventListener('submit', formEditInfoSubmitHandler);
 formCreatePlace.addEventListener('submit', formCreatePlaceSubmitHandler);
