@@ -122,9 +122,6 @@ function clearErrors(popup) {
 
 function closePopup(currentPopup) {
   currentPopup.classList.remove('popup_opened');
-  if (currentPopup.querySelector('.edit-form')) {
-    clearErrors(currentPopup);
-  }
 
   document.removeEventListener('keyup', handleEscClick);
   currentPopup.removeEventListener('mousedown', handleOutsideClick);
@@ -143,6 +140,7 @@ function saveInfo() {
 profileEditButton.addEventListener('click', () => {
   fillFormEditInfoFields();
   openPopup(popupEditInfo);
+  clearErrors(popupEditInfo);
 });
 
 profileAddButton.addEventListener('click', () => {
@@ -150,6 +148,7 @@ profileAddButton.addEventListener('click', () => {
   placeLinkField.value = "";
   openPopup(popupCreatePlace);
   setButtonDisable(validationConfig, popupCreatePlace);
+  clearErrors(popupCreatePlace);
 
 });
 
