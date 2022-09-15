@@ -147,8 +147,8 @@ profileAddButton.addEventListener('click', () => {
   placeNameField.value = "";
   placeLinkField.value = "";
   openPopup(popupCreatePlace);
-  setButtonDisable(validationConfig, popupCreatePlace);
   clearErrors(popupCreatePlace);
+  setButtonDisable(validationConfig, popupCreatePlace);
 
 });
 
