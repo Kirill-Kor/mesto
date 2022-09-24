@@ -24,7 +24,7 @@ const placeLinkField = container.querySelector('.edit-form__field_type_place-lin
 
 const popupCloseButtons = container.querySelectorAll('.popup__close-button');
 
-const initialCards = JSON.parse(places);
+const initialCards = JSON.parse(placesData);
 const validationConfig = {
   formSelector: '.edit-form',
   inputSelector: '.edit-form__field',
