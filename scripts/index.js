@@ -16,7 +16,6 @@ const descriptionField = container.querySelector('.edit-form__field_type_descrip
 
 const formCreatePlace = container.querySelector('.edit-form_type_add');
 
-const placeTemplate = container.querySelector('.place-template').content;
 const placesTable = container.querySelector('.places__table');
 
 const placeNameField = container.querySelector('.edit-form__field_type_place-name');
@@ -89,7 +88,12 @@ initialCards.forEach((item) => {
   renderPlace(new Card(item, '.place-template').createPlace(), placesTable);
 });
 
-enableValidation(validationConfig);
+
+const forms = Array.from(document.querySelectorAll('.edit-form'));
+forms.forEach(form => {
+  const validatedForm = new FormValidator(validationConfig, form);
+  validatedForm.enableValidation();
+})
 
 function submitProfileForm () {
   saveInfo();
@@ -139,11 +143,14 @@ function handleEscClick(evt) {
 function clearErrors(popup) {
   const errors = Array.from(popup.querySelectorAll('.edit-form__field-error'));
   const fields = Array.from(popup.querySelectorAll('.edit-form__field'));
+  const form = popup.querySelector('.edit-form');
+  const formValidate = new FormValidator(validationConfig, form);
 
   fields.forEach((field, index) => {
-    hideInputError(field, errors[index]);
+    formValidate.hideInputError(errors[index], field);
   })
-  setButtonActive(validationConfig, popup);
+  formValidate.setButtonActive();
+
 }
 
 function closePopup(currentPopup) {
@@ -174,7 +181,8 @@ profileAddButton.addEventListener('click', () => {
   placeLinkField.value = "";
   openPopup(popupCreatePlace);
   clearErrors(popupCreatePlace);
-  setButtonDisable(validationConfig, popupCreatePlace);
+  const formCreatePlace = popupCreatePlace.querySelector('.edit-form');
+  new FormValidator(validationConfig, formCreatePlace).setButtonDisable();
 
 });
 
