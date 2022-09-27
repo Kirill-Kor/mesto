@@ -31,61 +31,12 @@ const validationConfig = {
   inactiveButtonClass: 'edit-form__save-button_inactive',
   inputErrorClass: 'edit-form__field_type_error'
 }
+import {Card} from './Card.js';
+import {FormValidator} from "./FormValidator.js";
 
-class Card {
-  constructor(data, templateSelector) {
-    this._title = data.name;
-    this._link = data.link;
-    this._templateSelector = templateSelector;
-  }
-
-  _getTemplate() {
-    const placeElement = document
-      .querySelector(this._templateSelector).content
-      .querySelector('.places__place')
-      .cloneNode(true);
-    return placeElement;
-  }
-
-  createPlace() {
-    this._element = this._getTemplate();
-
-    const imageSelector = this._element.querySelector('.places__image');
-    imageSelector.src = this._link;
-    imageSelector.alt = "Фото";
-
-    this._element.querySelector('.places__title').textContent = this._title;
-    this._addEventListeners();
-    return this._element;
-  }
-
-  _addEventListeners() {
-    const likeButton = this._element.querySelector('.places__like-button');
-    likeButton.addEventListener('click', () => {
-      likeButton.classList.toggle('places__like-button_active');
-    })
-
-    const deleteButton = this._element.querySelector('.places__delete-button');
-    deleteButton.addEventListener('click', () => {
-      this._element.remove();
-    })
-
-    const openedImage = this._element.querySelector('.places__image');
-    openedImage.addEventListener('click', () => {
-      openPopup(popupOpenImage);
-      const popupImage = container.querySelector('.popup__image');
-      popupImage.src = openedImage.src;
-      popupImage.alt = openedImage.alt;
-
-      const imageCaption = container.querySelector('.popup__caption');
-      imageCaption.textContent = this._title;
-    })
-
-  }
-}
 
 initialCards.forEach((item) => {
-  renderPlace(new Card(item, '.place-template').createPlace(), placesTable);
+  renderPlace(new Card(item, '.place-template', popupOpenImage).createPlace(), placesTable);
 });
 
 
@@ -102,7 +53,7 @@ function submitProfileForm () {
 
 function submitCreatePlaceForm () {
 
-  renderPlace(new Card(getNewPlaceObject(placeNameField.value, placeLinkField.value),'.place-template').createPlace(), placesTable);
+  renderPlace(new Card(getNewPlaceObject(placeNameField.value, placeLinkField.value),'.place-template', popupOpenImage).createPlace(), placesTable);
   closePopup(popupCreatePlace);
 }
 
@@ -115,7 +66,7 @@ function renderPlace(place, container) {
   container.prepend(place);
 }
 
-function openPopup(currentPopup) {
+export function openPopup(currentPopup) {
   currentPopup.classList.add('popup_opened');
   setPopupClosingListeners(currentPopup);
 
@@ -128,14 +79,14 @@ function setPopupClosingListeners(popup) {
 
 function handleOutsideClick(evt) {
   if(evt.target === evt.currentTarget) {
-    popup = document.querySelector('.popup_opened');
+    const popup = document.querySelector('.popup_opened');
     closePopup(popup);
   }
 }
 
 function handleEscClick(evt) {
   if (evt.key === 'Escape') {
-    popup = document.querySelector('.popup_opened');
+    const popup = document.querySelector('.popup_opened');
     closePopup(popup);
   }
 }
