@@ -21,8 +21,6 @@
     const submitButton = form.querySelector(config.submitButtonSelector);
     submitButton.classList.add(config.inactiveButtonClass);
     submitButton.disabled = true;
-    console.log(config, submitButton, form);
-
   }
 
   function isValid(input) {

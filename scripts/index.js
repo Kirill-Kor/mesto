@@ -33,8 +33,60 @@ const validationConfig = {
   inputErrorClass: 'edit-form__field_type_error'
 }
 
+class Card {
+  constructor(data, templateSelector) {
+    this._title = data.name;
+    this._link = data.link;
+    this._templateSelector = templateSelector;
+  }
+
+  _getTemplate() {
+    const placeElement = document
+      .querySelector(this._templateSelector).content
+      .querySelector('.places__place')
+      .cloneNode(true);
+    return placeElement;
+  }
+
+  createPlace() {
+    this._element = this._getTemplate();
+
+    const imageSelector = this._element.querySelector('.places__image');
+    imageSelector.src = this._link;
+    imageSelector.alt = "Фото";
+
+    this._element.querySelector('.places__title').textContent = this._title;
+    this._addEventListeners();
+    return this._element;
+  }
+
+  _addEventListeners() {
+    const likeButton = this._element.querySelector('.places__like-button');
+    likeButton.addEventListener('click', () => {
+      likeButton.classList.toggle('places__like-button_active');
+    })
+
+    const deleteButton = this._element.querySelector('.places__delete-button');
+    deleteButton.addEventListener('click', () => {
+      this._element.remove();
+    })
+
+    const openedImage = this._element.querySelector('.places__image');
+    openedImage.addEventListener('click', () => {
+      openPopup(popupOpenImage);
+      const popupImage = container.querySelector('.popup__image');
+      popupImage.src = openedImage.src;
+      popupImage.alt = openedImage.alt;
+
+      const imageCaption = container.querySelector('.popup__caption');
+      imageCaption.textContent = this._title;
+    })
+
+  }
+}
+
 initialCards.forEach((item) => {
-  renderPlace(createPlace(item.name, item.link), placesTable);
+  renderPlace(new Card(item, '.place-template').createPlace(), placesTable);
 });
 
 enableValidation(validationConfig);
@@ -45,40 +97,14 @@ function submitProfileForm () {
 }
 
 function submitCreatePlaceForm () {
-  renderPlace(createPlace(placeNameField.value, placeLinkField.value), placesTable);
+
+  renderPlace(new Card(getNewPlaceObject(placeNameField.value, placeLinkField.value),'.place-template').createPlace(), placesTable);
   closePopup(popupCreatePlace);
 }
 
-function createPlace(placeName, placeLink) {
-  const place = placeTemplate.querySelector('.places__place').cloneNode(true);
-  const placesImageSelector = place.querySelector('.places__image');
-  placesImageSelector.src = placeLink;
-  placesImageSelector.alt = "Фото";
-  place.querySelector('.places__title').textContent = placeName;
+function getNewPlaceObject(name, link) {
+  return {"name": name, "link": link};
 
-
-  const likeButton = place.querySelector('.places__like-button');
-    likeButton.addEventListener('click', function(evt) {
-      evt.target.classList.toggle('places__like-button_active');
-    })
-
-  const deleteButton = place.querySelector('.places__delete-button');
-    deleteButton.addEventListener('click', function(evt) {
-      evt.target.closest('.places__place').remove();
-    })
-
-  const openedImage = place.querySelector('.places__image');
-    openedImage.addEventListener('click', function(evt) {
-      openPopup(popupOpenImage);
-      const popupImage = container.querySelector('.popup__image');
-      popupImage.src = evt.target.src;
-      popupImage.alt = evt.target.alt;
-
-      const imageCaption = container.querySelector('.popup__caption');
-      imageCaption.textContent = placeName;
-    })
-
-  return place;
 }
 
 function renderPlace(place, container) {
