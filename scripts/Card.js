@@ -1,11 +1,10 @@
-import {openPopup} from './index.js';
-export class Card {
 
-  constructor(data, templateSelector, popup) {
-    this._title = data.name;
-    this._link = data.link;
+export class Card {
+  constructor(cardData, templateSelector, openImagePopup) {
+    this._title = cardData.name;
+    this._link = cardData.link;
     this._templateSelector = templateSelector;
-    this._popup = popup;
+    this._openImagePopup = openImagePopup;
   }
 
   _getTemplate() {
@@ -21,8 +20,8 @@ export class Card {
 
     const imageSelector = this._element.querySelector('.places__image');
     imageSelector.src = this._link;
-    imageSelector.alt = "Фото";
-
+    imageSelector.alt = this._title; //Не вижу смысла альту присваивать название заголовка, так как скринридер будет 2 раза зачитывать заголовок, а это скорее вред чем польза
+                                     //Можно добавить alt с описанием в объект с картинкой, но это не будет работать для новых карточек
     this._element.querySelector('.places__title').textContent = this._title;
     this._addEventListeners();
     return this._element;
@@ -42,15 +41,7 @@ export class Card {
     const openedImage = this._element.querySelector('.places__image');
 
     openedImage.addEventListener('click', () => {
-
-      openPopup(this._popup);
-      const popupImage = this._popup.querySelector('.popup__image');
-      popupImage.src = openedImage.src;
-      popupImage.alt = openedImage.alt;
-
-      const imageCaption = this._popup.querySelector('.popup__caption');
-      imageCaption.textContent = this._title;
+      this._openImagePopup(openedImage, this._title);
     })
-
   }
 }

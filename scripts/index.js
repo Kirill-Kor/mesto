@@ -29,47 +29,56 @@ const validationConfig = {
   inputSelector: '.edit-form__field',
   submitButtonSelector: '.edit-form__save-button',
   inactiveButtonClass: 'edit-form__save-button_inactive',
+  errorFieldSelector: '.edit-form__field-error',
   inputErrorClass: 'edit-form__field_type_error'
 }
 import {Card} from './Card.js';
 import {FormValidator} from "./FormValidator.js";
 
-
-initialCards.forEach((item) => {
-  renderPlace(new Card(item, '.place-template', popupOpenImage).createPlace(), placesTable);
+initialCards.forEach((card) => {
+  renderPlace(createCard(card, '.place-template').createPlace(), placesTable);
 });
 
-
-const forms = Array.from(document.querySelectorAll('.edit-form'));
-forms.forEach(form => {
-  const validatedForm = new FormValidator(validationConfig, form);
-  validatedForm.enableValidation();
-})
+const formCreatePlaceValidation = new FormValidator(validationConfig, formCreatePlace);
+formCreatePlaceValidation.enableValidation();
+const formEditInfoValidation = new FormValidator(validationConfig, formEditInfo);
+formEditInfoValidation.enableValidation();
 
 function submitProfileForm () {
-  saveInfo();
+  saveUserInfo();
   closePopup(popupEditInfo);
 }
 
 function submitCreatePlaceForm () {
 
-  renderPlace(new Card(getNewPlaceObject(placeNameField.value, placeLinkField.value),'.place-template', popupOpenImage).createPlace(), placesTable);
+  renderPlace(createCard(getNewPlaceObject(placeNameField.value, placeLinkField.value),'.place-template').createPlace(), placesTable);
   closePopup(popupCreatePlace);
 }
 
 function getNewPlaceObject(name, link) {
   return {"name": name, "link": link};
+}
 
+function createCard(cardData, templateSelector) {
+  return new Card(cardData, templateSelector, openImagePopup);
 }
 
 function renderPlace(place, container) {
   container.prepend(place);
 }
 
-export function openPopup(currentPopup) {
+function openPopup(currentPopup) {
   currentPopup.classList.add('popup_opened');
   setPopupClosingListeners(currentPopup);
+}
 
+function openImagePopup(openedImage, imageTitle) {
+  openPopup(popupOpenImage);
+  const popupImage = popupOpenImage.querySelector('.popup__image');
+  popupImage.src = openedImage.src;
+  popupImage.alt = openedImage.alt;
+  const imageCaption =  popupOpenImage.querySelector('.popup__caption');
+  imageCaption.textContent = imageTitle;
 }
 
 function setPopupClosingListeners(popup) {
@@ -91,22 +100,8 @@ function handleEscClick(evt) {
   }
 }
 
-function clearErrors(popup) {
-  const errors = Array.from(popup.querySelectorAll('.edit-form__field-error'));
-  const fields = Array.from(popup.querySelectorAll('.edit-form__field'));
-  const form = popup.querySelector('.edit-form');
-  const formValidate = new FormValidator(validationConfig, form);
-
-  fields.forEach((field, index) => {
-    formValidate.hideInputError(errors[index], field);
-  })
-  formValidate.setButtonActive();
-
-}
-
 function closePopup(currentPopup) {
   currentPopup.classList.remove('popup_opened');
-
   document.removeEventListener('keyup', handleEscClick);
   currentPopup.removeEventListener('mousedown', handleOutsideClick);
 }
@@ -116,7 +111,7 @@ function fillFormEditInfoFields() {
   descriptionField.value = profileDescription.textContent;
 }
 
-function saveInfo() {
+function saveUserInfo() {
   profileName.textContent = nameField.value;
   profileDescription.textContent = descriptionField.value;
 }
@@ -124,21 +119,18 @@ function saveInfo() {
 profileEditButton.addEventListener('click', () => {
   fillFormEditInfoFields();
   openPopup(popupEditInfo);
-  clearErrors(popupEditInfo);
+  formEditInfoValidation.clearErrors();
 });
 
 profileAddButton.addEventListener('click', () => {
   placeNameField.value = "";
   placeLinkField.value = "";
   openPopup(popupCreatePlace);
-  clearErrors(popupCreatePlace);
-  const formCreatePlace = popupCreatePlace.querySelector('.edit-form');
-  new FormValidator(validationConfig, formCreatePlace).setButtonDisable();
-
+  formCreatePlaceValidation.clearErrors();
+  formCreatePlaceValidation.setButtonDisable();
 });
 
 formEditInfo.addEventListener('submit', submitProfileForm);
 formCreatePlace.addEventListener('submit', submitCreatePlaceForm);
 popupCloseButtons.forEach(button =>
   button.addEventListener('click', () => closePopup(button.closest('.popup'))));
-

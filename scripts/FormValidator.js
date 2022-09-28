@@ -27,7 +27,7 @@
         this.setButtonDisable();
       }
        else {
-         this.hideInputError(errorField, input);
+         this._hideInputError(errorField, input);
 
          if (Array.from(this._form.querySelectorAll(this._config.inputSelector)).every(this._isValid)) {
            this.setButtonActive();
@@ -44,7 +44,7 @@
       errorField.textContent = input.validationMessage;
     }
 
-    hideInputError(errorField, input) {
+    _hideInputError(errorField, input) {
       input.classList.remove(this._config.inputErrorClass);
       errorField.textContent = '';
     }
@@ -59,7 +59,16 @@
       const submitButton = this._form.querySelector(this._config.submitButtonSelector);
       submitButton.classList.remove(this._config.inactiveButtonClass);
       submitButton.disabled = false;
+    }
 
+    clearErrors() {
+      const errors = Array.from(this._form.querySelectorAll(this._config.errorFieldSelector));
+      const fields = Array.from(this._form.querySelectorAll(this._config.inputSelector));
+
+      fields.forEach((field, index) => {
+        this._hideInputError(errors[index], field);
+      })
+      this.setButtonActive();
     }
   }
 
