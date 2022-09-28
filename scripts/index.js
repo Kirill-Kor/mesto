@@ -5,6 +5,8 @@ const profileAddButton = container.querySelector('.profile__add-button');
 const popupEditInfo = container.querySelector('.popup_type_info-edit');
 const popupCreatePlace = container.querySelector('.popup_type_add-post');
 const popupOpenImage = container.querySelector('.popup_type_image');
+const popupImage = popupOpenImage.querySelector('.popup__image');
+const imageCaption =  popupOpenImage.querySelector('.popup__caption');
 
 const profileName = container.querySelector('.profile__name');
 const profileDescription = container.querySelector('.profile__description');
@@ -74,10 +76,8 @@ function openPopup(currentPopup) {
 
 function openImagePopup(openedImage, imageTitle) {
   openPopup(popupOpenImage);
-  const popupImage = popupOpenImage.querySelector('.popup__image');
   popupImage.src = openedImage.src;
   popupImage.alt = openedImage.alt;
-  const imageCaption =  popupOpenImage.querySelector('.popup__caption');
   imageCaption.textContent = imageTitle;
 }
 
