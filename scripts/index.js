@@ -18,7 +18,7 @@ const descriptionField = container.querySelector('.edit-form__field_type_descrip
 
 const formCreatePlace = container.querySelector('.edit-form_type_add');
 
-const placesTable = container.querySelector('.places__table');
+//const placesTable = container.querySelector('.places__table');
 
 const placeNameField = container.querySelector('.edit-form__field_type_place-name');
 const placeLinkField = container.querySelector('.edit-form__field_type_place-link');
@@ -34,17 +34,24 @@ const validationConfig = {
   errorFieldSelector: '.edit-form__field-error',
   inputErrorClass: 'edit-form__field_type_error'
 }
-import {Card} from './Card.js';
-import {FormValidator} from "./FormValidator.js";
-
-initialCards.forEach((card) => {
-  renderPlace(createCard(card, '.place-template').createPlace(), placesTable);
-});
+import Card from './Card.js';
+import FormValidator from './FormValidator.js';
+import Section from './Section.js';
 
 const formCreatePlaceValidation = new FormValidator(validationConfig, formCreatePlace);
 formCreatePlaceValidation.enableValidation();
 const formEditInfoValidation = new FormValidator(validationConfig, formEditInfo);
 formEditInfoValidation.enableValidation();
+
+const renderedCards = new Section({
+    items: initialCards,
+    renderer: ({name, link}) => {
+      renderedCards.addItem(createCard({name, link}, '.place-template'))
+    }
+  }, '.places__table'
+);
+
+renderedCards.renderItems();
 
 function submitProfileForm () {
   saveUserInfo();
@@ -53,20 +60,11 @@ function submitProfileForm () {
 
 function submitCreatePlaceForm () {
 
-  renderPlace(createCard(getNewPlaceObject(placeNameField.value, placeLinkField.value),'.place-template').createPlace(), placesTable);
   closePopup(popupCreatePlace);
 }
 
-function getNewPlaceObject(name, link) {
-  return {"name": name, "link": link};
-}
-
 function createCard(cardData, templateSelector) {
-  return new Card(cardData, templateSelector, openImagePopup);
-}
-
-function renderPlace(place, container) {
-  container.prepend(place);
+  return new Card(cardData, templateSelector, openImagePopup).createPlace();
 }
 
 function openPopup(currentPopup) {

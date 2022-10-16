@@ -1,5 +1,5 @@
 
-export class Card {
+export default class Card {
   constructor(cardData, templateSelector, openImagePopup) {
     this._title = cardData.name;
     this._link = cardData.link;
@@ -20,8 +20,7 @@ export class Card {
 
     const imageSelector = this._element.querySelector('.places__image');
     imageSelector.src = this._link;
-    imageSelector.alt = this._title; //Не вижу смысла альту присваивать название заголовка, так как скринридер будет 2 раза зачитывать заголовок, а это скорее вред чем польза
-                                     //Можно добавить alt с описанием в объект с картинкой, но это не будет работать для новых карточек
+    imageSelector.alt = this._title;
     this._element.querySelector('.places__title').textContent = this._title;
     this._addEventListeners();
     return this._element;
