@@ -5,8 +5,6 @@ const profileAddButton = container.querySelector('.profile__add-button');
 const formEditInfo = container.querySelector('.edit-form_type_info-edit');
 const formCreatePlace = container.querySelector('.edit-form_type_add');
 
-const initialCards = JSON.parse(placesData);
-
 const validationConfig = {
   formSelector: '.edit-form',
   inputSelector: '.edit-form__field',
@@ -16,4 +14,4 @@ const validationConfig = {
   inputErrorClass: 'edit-form__field_type_error'
 }
 
-export {profileEditButton, profileAddButton, formEditInfo, formCreatePlace, initialCards, validationConfig}
+export {profileEditButton, profileAddButton, formEditInfo, formCreatePlace, validationConfig}
