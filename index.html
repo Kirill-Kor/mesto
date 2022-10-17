@@ -39,9 +39,9 @@
         <div class="popup__container">
           <h2 class="popup__title">Редактировать профиль</h2>
           <form class="edit-form edit-form_type_info-edit" name="edit-form" novalidate>
-            <input id="name-input" class="edit-form__field edit-form__field_type_name" type="text" value="" placeholder="Ваше имя" minlength="2" maxlength="40" required>
+            <input id="name-input" name="name" class="edit-form__field edit-form__field_type_name" type="text" value="" placeholder="Ваше имя" minlength="2" maxlength="40" required>
             <span class="edit-form__field-error name-input-error"></span>
-            <input id="description-input" class="edit-form__field edit-form__field_type_description" type="text" value="" placeholder="Профессия" minlength="2" maxlength="200" required>
+            <input id="description-input" name="info" class="edit-form__field edit-form__field_type_description" type="text" value="" placeholder="Профессия" minlength="2" maxlength="200" required>
             <span class="edit-form__field-error description-input-error"></span>
             <button class="edit-form__save-button" type="submit">Сохранить</button>
           </form>
@@ -53,9 +53,9 @@
         <div class="popup__container">
           <h2 class="popup__title">Новое место</h2>
           <form class="edit-form edit-form_type_add" name="create-form" novalidate>
-            <input id="place-name-input" class="edit-form__field edit-form__field_type_place-name" type="text" value="" placeholder="Название" minlength="2" maxlength="30" required>
+            <input id="place-name-input" name="name" class="edit-form__field edit-form__field_type_place-name" type="text" value="" placeholder="Название" minlength="2" maxlength="30" required>
             <span class="edit-form__field-error place-name-input-error"></span>
-            <input id="place-link-input" class="edit-form__field edit-form__field_type_place-link" type="URL" value="" placeholder="Ссылка на картинку" required>
+            <input id="place-link-input" name="link" class="edit-form__field edit-form__field_type_place-link" type="URL" value="" placeholder="Ссылка на картинку" required>
             <span class="edit-form__field-error place-link-input-error"></span>
             <button class="edit-form__save-button edit-form__save-button_inactive" type="submit" disabled>Создать</button>
           </form>
