@@ -3,6 +3,8 @@
     constructor(config, form) {
       this._config = config;
       this._form = form;
+      this._inputs =  Array.from(this._form.querySelectorAll(this._config.inputSelector));
+      this._submitButton = this._form.querySelector(this._config.submitButtonSelector);
     }
 
     enableValidation() {
@@ -10,8 +12,8 @@
     }
 
     _setHandlers() {
-      const inputs = Array.from(this._form.querySelectorAll(this._config.inputSelector));
-      inputs.forEach((input) => {
+
+      this._inputs.forEach((input) => {
         input.addEventListener('input', (evt) => {
           this._checkValidation(evt.target);
         })
@@ -49,29 +51,24 @@
     }
 
     setButtonDisable() {
-      const submitButton = this._form.querySelector(this._config.submitButtonSelector);
-      submitButton.classList.add(this._config.inactiveButtonClass);
-      submitButton.disabled = true;
+      this._submitButton.classList.add(this._config.inactiveButtonClass);
+      this._submitButton.disabled = true;
     }
 
     setButtonActive() {
-      const submitButton = this._form.querySelector(this._config.submitButtonSelector);
-      submitButton.classList.remove(this._config.inactiveButtonClass);
-      submitButton.disabled = false;
+      this._submitButton.classList.remove(this._config.inactiveButtonClass);
+      this._submitButton.disabled = false;
     }
 
     clearErrors() {
       const errors = Array.from(this._form.querySelectorAll(this._config.errorFieldSelector));
-      const fields = Array.from(this._form.querySelectorAll(this._config.inputSelector));
 
-      fields.forEach((field, index) => {
+      this._inputs.forEach((field, index) => {
         this._hideInputError(errors[index], field);
       })
       this.setButtonActive();
     }
   }
-
-
 
 
 

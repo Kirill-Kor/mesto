@@ -9,10 +9,11 @@ export default class PopupWithImage extends Popup {
   }
 
   open(image, title) {
-    super.open();
     this._image.src = image;
     this._image.alt = title;
     this._title.textContent = title;
+    super.open();
+    this._popup.classList.add('popup_darker');
   }
 
 }

@@ -27,11 +27,16 @@ export default class PopupWithForm extends Popup {
     });
   }
 
+  _setPrimaryValues() {
+    this._formFields.forEach((field) => {
+      field.value = this._getPrimaryValues()[field.name];
+    })
+  }
+
   open() {
     super.open();
     if(this._getPrimaryValues) {
-      this._formFields[0].value = this._getPrimaryValues().name;
-      this._formFields[1].value = this._getPrimaryValues().info;
+      this._setPrimaryValues();
     }
   }
 
