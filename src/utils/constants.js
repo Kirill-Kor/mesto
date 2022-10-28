@@ -14,8 +14,8 @@ const formChangeAvatar = container.querySelector('.edit-form_type_avatar');
 const validationConfig = {
   formSelector: '.edit-form',
   inputSelector: '.edit-form__field',
-  submitButtonSelector: '.edit-form__save-button',
-  inactiveButtonClass: 'edit-form__save-button_inactive',
+  submitButtonSelector: '.save-button',
+  inactiveButtonClass: 'save-button_inactive',
   errorFieldSelector: '.edit-form__field-error',
   inputErrorClass: 'edit-form__field_type_error'
 }

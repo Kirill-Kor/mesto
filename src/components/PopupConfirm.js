@@ -4,7 +4,7 @@ export default class PopupConfirm extends Popup {
   constructor(selector, submit) {
     super(selector);
     this._submitForm = submit;
-    this._submitButton = this._popup.querySelector('.edit-form__save-button');
+    this._submitButton = this._popup.querySelector('.save-button');
   }
 
   open(data, deleteHandler) {

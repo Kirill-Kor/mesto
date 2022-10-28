@@ -7,7 +7,7 @@ export default class PopupWithForm extends Popup {
     this._submit = submitForm;
     this._formFields = Array.from(this._formElement.querySelectorAll('.edit-form__field'));
     this._getPrimaryValues = getPrimaryValues;
-    this._saveButton = this._formElement.querySelector('.edit-form__save-button');
+    this._saveButton = this._formElement.querySelector('.save-button');
   }
 
   _getInputValues() {
