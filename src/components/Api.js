@@ -2,91 +2,45 @@ export default class Api {
   constructor(options) {
     this._options = {...options};
   }
-
-  getInitialCards() {
-    return fetch(this._options.baseUrl + 'cards', this._options)
+  _fetch(path, method = "GET", body) {
+    return fetch(this._options.baseUrl + path, {headers: this._options.headers, method: method, body: body})
       .then((result) => {
         if(result.ok) {
-
           return result.json();
         }
         return Promise.reject(`Ошибка: ${result.status}`);
       })
+  }
 
+  getInitialCards() {
+    return this._fetch('cards');
   }
 
   getUserInfo() {
-    return fetch( this._options.baseUrl + 'users/me', this._options)
-      .then((result) => {
-        if(result.ok) {
-
-          return result.json();
-        }
-        return Promise.reject(`Ошибка: ${result.status}`);
-      });
+    return this._fetch('users/me');
   }
 
   patchUserInfo({name, about}) {
-    this._options.method = "PATCH";
-    this._options.body = JSON.stringify({name: name, about: about});
-    return fetch(this._options.baseUrl + 'users/me', this._options)
-      .then((result) => {
-        if(result.ok) {
-          return result.json();
-        }
-        return Promise.reject(`Ошибка: ${result.status}`);
-      });
-
+    return this._fetch('users/me', "PATCH", JSON.stringify({name: name, about: about}));
   }
 
   addNewCard({name, link}) {
-    this._options.method = "POST";
-    this._options.body = JSON.stringify({name: name, link: link});
-    return fetch(this._options.baseUrl + 'cards', this._options)
-      .then((result) => {
-        if(result.ok) {
-          return result.json();
-        }
-        return Promise.reject(`Ошибка: ${result.status}`);
-      });
+    return this._fetch('cards', "POST",JSON.stringify({name: name, link: link}));
   }
 
   deleteCard(cardId) {
-    this._options.method = "DELETE";
-    return fetch(this._options.baseUrl + 'cards/' + cardId, this._options);
+    return this._fetch('cards/' + cardId, "DELETE");
   }
 
   setLike(cardId) {
-    this._options.method = "PUT";
-    return fetch(this._options.baseUrl + 'cards/' + cardId + '/likes', this._options)
-      .then((result) => {
-        if(result.ok) {
-          return result.json();
-        }
-        return Promise.reject(`Ошибка: ${result.status}`);
-      });
+    return this._fetch('cards/' + cardId + '/likes', "PUT");
   }
 
   deleteLike(cardId) {
-    this._options.method = "DELETE";
-    return fetch(this._options.baseUrl + 'cards/' + cardId + '/likes', this._options)
-      .then((result) => {
-        if(result.ok) {
-          return result.json();
-        }
-        return Promise.reject(`Ошибка: ${result.status}`);
-      });
+    return this._fetch('cards/' + cardId + '/likes', "DELETE");
   }
 
   patchUserAvatar(avatarLink) {
-    this._options.method = "PATCH";
-    this._options.body = JSON.stringify({avatar: avatarLink});
-    return fetch(this._options.baseUrl + 'users/me/avatar', this._options)
-      .then((result) => {
-        if(result.ok) {
-          return result.json();
-        }
-        return Promise.reject(`Ошибка: ${result.status}`);
-    })
+    return this._fetch('users/me/avatar', "PATCH", JSON.stringify({avatar: avatarLink}));
   }
 }
