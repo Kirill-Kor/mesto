@@ -1,9 +1,15 @@
 const container = document.querySelector('.container');
 const profileEditButton = container.querySelector('.profile__edit-button');
 const profileAddButton = container.querySelector('.profile__add-button');
+const profileAvatarButton = container.querySelector('.profile__avatar-container');
+
+const profileAvatar = container.querySelector('.profile__avatar');
 
 const formEditInfo = container.querySelector('.edit-form_type_info-edit');
 const formCreatePlace = container.querySelector('.edit-form_type_add');
+const formChangeAvatar = container.querySelector('.edit-form_type_avatar');
+
+
 
 const validationConfig = {
   formSelector: '.edit-form',
@@ -14,4 +20,4 @@ const validationConfig = {
   inputErrorClass: 'edit-form__field_type_error'
 }
 
-export {profileEditButton, profileAddButton, formEditInfo, formCreatePlace, validationConfig}
+export {profileEditButton, profileAddButton, profileAvatarButton, formEditInfo, formCreatePlace, formChangeAvatar, validationConfig, profileAvatar}
