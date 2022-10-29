@@ -1,7 +1,5 @@
 import './index.css';
 
-import {initialCards} from '../utils/places.js';
-
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
@@ -32,21 +30,19 @@ const api = new Api({
 
 const userInfo = new UserInfo('.profile__name', '.profile__description');
 
-
 const popupInfoEdit = new PopupWithForm('.popup_type_info-edit', (values, saveButton, buttonInitialText)=> {
-    renderLoadingText(saveButton, true)
+    renderLoadingText(saveButton, true);
     api.patchUserInfo(values)
       .then((result) => {
-      userInfo.setUserInfo(result);
+        userInfo.setUserInfo(result);
     })
       .catch((err) => {
-        console.log(err); //
+        console.log(err);
       })
       .finally(() => {
         renderLoadingText(saveButton, false, buttonInitialText);
         popupInfoEdit.close();
       })
-
 
 }, ()=> {
   return userInfo.getUserInfo();
@@ -68,15 +64,14 @@ const popupCreateCard = new PopupWithForm('.popup_type_add-post', (values, saveB
   })
 })
 
-const popupDeleteConfirm = new PopupConfirm('.popup_type_delete-confirm', (data) => {
+const popupDeleteConfirm = new PopupConfirm('.popup_type_delete-confirm', (data, callback) => {
   api.deleteCard(data)
-    .then((result) => {
-      console.log(result);
+    .then(() => {
+      callback();
     })
     .catch((err) => {
       console.log(err);
     })
-
 });
 
 function renderLoadingText(button, isLoading, text) {
@@ -86,8 +81,6 @@ function renderLoadingText(button, isLoading, text) {
   else {
     button.textContent = text;
   }
-
-
 }
 
 const popupAvatarChange = new PopupWithForm('.popup_type_new-avatar', (data, saveButton, buttonInitialText) => {
@@ -103,7 +96,6 @@ const popupAvatarChange = new PopupWithForm('.popup_type_new-avatar', (data, sav
       renderLoadingText(saveButton, false, buttonInitialText);
       popupAvatarChange.close();
     })
-
 })
 
 const openedImage = new PopupWithImage('.popup_type_image');
@@ -127,19 +119,23 @@ function createCard({name, link, likes, owner, _id}, templateSelector) {
       if(isLiked) {
         api.deleteLike(cardId)
           .then((result) => {
-           newCard.removeLike(result.likes.length);
+            newCard.cardLikeStatement(result.likes.length, !isLiked);
           })
+          .catch((err) => {
+            console.log(err);
+        })
       }
       else {
         api.setLike(cardId)
           .then((result) => {
-           newCard.setLike(result.likes.length);
+            newCard.cardLikeStatement(result.likes.length, !isLiked);
+          })
+          .catch((err) => {
+            console.log(err);
           })
       }
-
     },
     userInfo.getId(),
-
   )
   return newCard.createPlace();
 }
@@ -148,19 +144,14 @@ function openImagePopup(openedImageLink, imageTitle) {
   openedImage.open(openedImageLink, imageTitle);
 }
 
-api.getUserInfo()
-  .then((result) => {
-    userInfo.setUserInfo(result);
-    userInfo.setId(result);
-  })
-  .catch((err) => {
-    console.log(err);
-  })
-
-api.getInitialCards()
-  .then((result) => {
-    renderedCards.renderItems(result);
-  })
+Promise.all([
+  api.getUserInfo(),
+  api.getInitialCards(),
+])
+  .then(([userData, initialCards]) => {
+    userInfo.setUserInfo(userData);
+    renderedCards.renderItems(initialCards);
+})
   .catch((err) => {
     console.log(err);
   })

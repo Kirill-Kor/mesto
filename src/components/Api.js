@@ -1,9 +1,10 @@
 export default class Api {
   constructor(options) {
     this._options = {...options};
+
   }
   _fetch(path, method = "GET", body) {
-    return fetch(this._options.baseUrl + path, {headers: this._options.headers, method: method, body: body})
+    return fetch(`${this._options.baseUrl}${path}`, {headers: this._options.headers, method: method, body: body})
       .then((result) => {
         if(result.ok) {
           return result.json();
